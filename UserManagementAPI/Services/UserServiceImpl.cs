@@ -67,9 +67,9 @@ namespace UserManagementAPI.Services
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            try { 
+            try {  
 
-                var users = await context.Users.ToListAsync();
+                var users = await context.Users.Where(e => e.IsActive == true).ToListAsync();
                 return users;
 
             } catch (Exception ex) 
@@ -104,15 +104,15 @@ namespace UserManagementAPI.Services
                     return null;
                 }
 
-                user.Username = updatedUser.Username;
-                user.Email = updatedUser.Email;
-                user.PasswordHash = updatedUser.PasswordHash;
-                user.FirstName = updatedUser.FirstName;
-                user.LastName = updatedUser.LastName;
-                user.Role = updatedUser.Role;
-                user.DateOfBirth = updatedUser.DateOfBirth;
-                user.IsActive = updatedUser.IsActive;
-                user.DateUpdated = DateOnly.FromDateTime(DateTime.UtcNow);
+                user.Username       = updatedUser.Username;
+                user.Email          = updatedUser.Email;
+                user.PasswordHash   = updatedUser.PasswordHash;
+                user.FirstName      = updatedUser.FirstName;
+                user.LastName       = updatedUser.LastName;
+                user.Role           = updatedUser.Role;
+                user.DateOfBirth    = updatedUser.DateOfBirth;
+                user.IsActive       = updatedUser.IsActive;
+                user.DateUpdated    = DateOnly.FromDateTime(DateTime.UtcNow);
 
                 context.Users.Update(user);
                 await context.SaveChangesAsync();
